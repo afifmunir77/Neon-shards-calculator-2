@@ -4,55 +4,355 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Code: Neon Shards Calculator</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .input-group label {
+      flex: 1;
+      font-weight: bold;
+    }
+    .input-group input[type="number"] {
+      width: 50px;
+      padding: 5px;
+      text-align: center;
+      margin: 0 10px;
+    }
+    .input-group button {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .custom-reward {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      background: #e9ecef;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: grab;
+    }
+    .custom-reward:active {
+      cursor: grabbing;
+    }
+    .custom-reward.dragging {
+      opacity: 0.5;
+    }
+    .custom-reward button {
+      margin-left: 10px;
+      background: #dc3545;
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 3px 6px;
+      border-radius: 3px;
+    }
+    .total {
+      margin-top: 20px;
+      font-size: 1.2em;
+      text-align: center;
+      font-weight: bold;
+      color: #007BFF;
+    }
+    .add-more-container {
+      margin-top: 20px;
+    }
+    .add-more-container input {
+      margin-right: 10px;
+      padding: 5px;
+    }
+    #customRewardsContainer {
+      min-height: 50px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>Code: Neon Shards Calculator</h1>
 
-    <!-- Player Input Section -->
-    <div class="player-inputs">
-      <div class="input-group">
-        <label>98-99 OVR:</label>
-        <button class="btn-control" onclick="updateValue('ovr98_99', -1)">-</button>
-        <input type="number" id="ovr98_99" value="0" min="0" readonly>
-        <button class="btn-control" onclick="updateValue('ovr98_99', 1)">+</button>
-      </div>
-      <!-- ... (other OVR inputs remain the same) ... -->
-      <div class="input-group">
-        <label>Others:</label>
-        <input type="number" id="others" value="0" min="0" oninput="saveData()">
+    <div class="input-group">
+      <label>98-99 OVR:</label>
+      <button onclick="updateValue('ovr98_99', -1)">-</button>
+      <input type="number" id="ovr98_99" value="0" min="0" readonly>
+      <button onclick="updateValue('ovr98_99', 1)">+</button>
+    </div>
+    <div class="input-group">
+      <label>100-102 OVR:</label>
+      <button onclick="updateValue('ovr100_102', -1)">-</button>
+      <input type="number" id="ovr100_102" value="0" min="0" readonly>
+      <button onclick="updateValue('ovr100_102', 1)">+</button>
+    </div>
+    <div class="input-group">
+      <label>103 OVR:</label>
+      <button onclick="updateValue('ovr103', -1)">-</button>
+      <input type="number" id="ovr103" value="0" min="0" readonly>
+      <button onclick="updateValue('ovr103', 1)">+</button>
+    </div>
+    <div class="input-group">
+      <label>104 OVR:</label>
+      <button onclick="updateValue('ovr104', -1)">-</button>
+      <input type="number" id="ovr104" value="0" min="0" readonly>
+      <button onclick="updateValue('ovr104', 1)">+</button>
+    </div>
+    <div class="input-group">
+      <label>105 OVR:</label>
+      <button onclick="updateValue('ovr105', -1)">-</button>
+      <input type="number" id="ovr105" value="0" min="0" readonly>
+      <button onclick="updateValue('ovr105', 1)">+</button>
+    </div>
+    <div class="input-group">
+      <label>106 OVR:</label>
+      <button onclick="updateValue('ovr106', -1)">-</button>
+      <input type="number" id="ovr106" value="0" min="0" readonly>
+      <button onclick="updateValue('ovr106', 1)">+</button>
+    </div>
+    <div class="input-group">
+      <label>107 OVR:</label>
+      <button onclick="updateValue('ovr107', -1)">-</button>
+      <input type="number" id="ovr107" value="0" min="0" readonly>
+      <button onclick="updateValue('ovr107', 1)">+</button>
+    </div>
+    <div class="input-group">
+      <label>Others:</label>
+      <input type="number" id="others" value="0" min="0" oninput="saveData()">
+    </div>
+
+    <div class="input-group">
+      <label>Daily Pack:</label>
+      <button onclick="updateValue('dailyPack', -1)">-</button>
+      <input type="number" id="dailyPack" value="0" min="0" readonly>
+      <button onclick="updateValue('dailyPack', 1)">+</button>
+    </div>
+
+    <div id="customRewardsContainer" ondragover="handleDragOver(event)"></div>
+
+    <div class="add-more-container">
+      <label><input type="checkbox" id="addMoreToggle" onchange="toggleAddMore()"> Add More Rewards</label>
+      <div id="addMoreSection" style="display: none;">
+        <input type="text" id="rewardName" placeholder="Name" />
+        <input type="number" id="rewardShards" placeholder="Shards" min="0" />
+        <button onclick="addCustomReward()">Add</button>
       </div>
     </div>
 
-    <!-- Daily Pack Section -->
-    <div class="daily-pack-section">
-      <div class="input-group">
-        <label>Daily Pack:</label>
-        <button class="btn-control" onclick="updateValue('dailyPack', -1)">-</button>
-        <input type="number" id="dailyPack" value="0" min="0" readonly>
-        <button class="btn-control" onclick="updateValue('dailyPack', 1)">+</button>
-      </div>
-    </div>
-
-    <!-- Custom Rewards Section -->
-    <div class="custom-rewards-section">
-      <div id="customRewardsContainer" class="rewards-container"></div>
-      <div class="add-more-container">
-        <label><input type="checkbox" id="addMoreToggle"> Add More Rewards</label>
-        <div id="addMoreSection" class="add-section">
-          <input type="text" id="rewardName" placeholder="Reward Name">
-          <input type="number" id="rewardShards" placeholder="Shards" min="0">
-          <button class="btn-primary" onclick="addCustomReward()">Add Reward</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Total Display -->
     <div class="total" id="totalShards">Total Shards: 0</div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const shardValues = {
+      ovr98_99: 5,
+      ovr100_102: 10,
+      ovr103: 30,
+      ovr104: 60,
+      ovr105: 120,
+      ovr106: 180,
+      ovr107: 250,
+    };
+
+    let customRewards = [];
+    let dragSrcEl;
+
+    function updateValue(id, change) {
+      const input = document.getElementById(id);
+      let value = parseInt(input.value) + change;
+      if (value < 0) value = 0;
+      input.value = value;
+      saveData();
+      calculateTotal();
+    }
+
+    function calculateTotal() {
+      let total = 0;
+
+      for (const [key, value] of Object.entries(shardValues)) {
+        const count = parseInt(document.getElementById(key).value);
+        total += count * value;
+      }
+
+      total += parseInt(document.getElementById('others').value);
+
+      const dailyPackCount = parseInt(document.getElementById('dailyPack').value);
+      total += dailyPackCount * 10;
+
+      customRewards.forEach(reward => {
+        if (reward.checked) {
+          total += reward.shards;
+        }
+      });
+
+      document.getElementById('totalShards').textContent = `Total Shards: ${total}`;
+    }
+
+    function addCustomReward() {
+      const name = document.getElementById('rewardName').value.trim();
+      const shards = parseInt(document.getElementById('rewardShards').value);
+
+      if (!name || isNaN(shards) || shards <= 0) {
+        alert("Please enter a valid name and shard value.");
+        return;
+      }
+
+      const rewardId = `customReward_${Date.now()}`;
+      const newReward = {
+        id: rewardId,
+        name,
+        shards,
+        checked: true
+      };
+
+      customRewards.push(newReward);
+
+      const container = document.getElementById('customRewardsContainer');
+      const rewardDiv = createRewardElement(newReward);
+      container.appendChild(rewardDiv);
+
+      document.getElementById('rewardName').value = '';
+      document.getElementById('rewardShards').value = '';
+
+      saveData();
+      calculateTotal();
+    }
+
+    function createRewardElement(reward) {
+      const rewardDiv = document.createElement('div');
+      rewardDiv.className = 'custom-reward';
+      rewardDiv.draggable = true;
+      rewardDiv.id = reward.id;
+      rewardDiv.innerHTML = `
+        <label><input type="checkbox" checked onchange="toggleCustomReward('${reward.id}')"> ${reward.name} (${reward.shards} Shards)</label>
+        <button onclick="removeCustomReward('${reward.id}')">Remove</button>
+      `;
+
+      rewardDiv.addEventListener('dragstart', handleDragStart);
+      rewardDiv.addEventListener('dragend', handleDragEnd);
+      return rewardDiv;
+    }
+
+    function toggleCustomReward(id) {
+      const reward = customRewards.find(r => r.id === id);
+      if (reward) {
+        reward.checked = !reward.checked;
+        saveData();
+        calculateTotal();
+      }
+    }
+
+    function removeCustomReward(id) {
+      customRewards = customRewards.filter(r => r.id !== id);
+      const container = document.getElementById('customRewardsContainer');
+      const rewardDiv = document.getElementById(id);
+      container.removeChild(rewardDiv);
+      saveData();
+      calculateTotal();
+    }
+
+    function toggleAddMore() {
+      const toggle = document.getElementById('addMoreToggle');
+      const section = document.getElementById('addMoreSection');
+      section.style.display = toggle.checked ? 'block' : 'none';
+    }
+
+    function handleDragStart(e) {
+      dragSrcEl = this;
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/html', this.outerHTML);
+      setTimeout(() => {
+        this.classList.add('dragging');
+      }, 0);
+    }
+
+    function handleDragEnd(e) {
+      this.classList.remove('dragging');
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      
+      const target = e.target.closest('.custom-reward');
+      const container = document.getElementById('customRewardsContainer');
+      if (target && target !== dragSrcEl) {
+        const rect = target.getBoundingClientRect();
+        const offset = e.clientY - rect.top;
+        
+        if (offset < rect.height / 2) {
+          container.insertBefore(dragSrcEl, target);
+        } else {
+          container.insertBefore(dragSrcEl, target.nextSibling);
+        }
+        
+        updateCustomRewardsOrder();
+      }
+    }
+
+    function updateCustomRewardsOrder() {
+      const container = document.getElementById('customRewardsContainer');
+      const orderedIds = Array.from(container.children).map(el => el.id);
+      customRewards.sort((a, b) => orderedIds.indexOf(a.id) - orderedIds.indexOf(b.id));
+      saveData();
+    }
+
+    function saveData() {
+      const data = {
+        ovr98_99: document.getElementById('ovr98_99').value,
+        ovr100_102: document.getElementById('ovr100_102').value,
+        ovr103: document.getElementById('ovr103').value,
+        ovr104: document.getElementById('ovr104').value,
+        ovr105: document.getElementById('ovr105').value,
+        ovr106: document.getElementById('ovr106').value,
+        ovr107: document.getElementById('ovr107').value,
+        others: document.getElementById('others').value,
+        dailyPack: document.getElementById('dailyPack').value,
+        customRewards: customRewards,
+      };
+      localStorage.setItem('neonShardsData', JSON.stringify(data));
+      calculateTotal();
+    }
+
+    function loadData() {
+      const savedData = localStorage.getItem('neonShardsData');
+      if (savedData) {
+        const data = JSON.parse(savedData);
+        document.getElementById('ovr98_99').value = data.ovr98_99 || 0;
+        document.getElementById('ovr100_102').value = data.ovr100_102 || 0;
+        document.getElementById('ovr103').value = data.ovr103 || 0;
+        document.getElementById('ovr104').value = data.ovr104 || 0;
+        document.getElementById('ovr105').value = data.ovr105 || 0;
+        document.getElementById('ovr106').value = data.ovr106 || 0;
+        document.getElementById('ovr107').value = data.ovr107 || 0;
+        document.getElementById('others').value = data.others || 0;
+        document.getElementById('dailyPack').value = data.dailyPack || 0;
+
+        customRewards = data.customRewards || [];
+        const container = document.getElementById('customRewardsContainer');
+        customRewards.forEach(reward => {
+          const rewardDiv = createRewardElement(reward);
+          container.appendChild(rewardDiv);
+        });
+      }
+      calculateTotal();
+    }
+
+    window.onload = loadData;
+  </script>
 </body>
 </html>
