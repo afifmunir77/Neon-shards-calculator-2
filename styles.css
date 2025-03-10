@@ -1,0 +1,180 @@
+/* Base Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  color: #333;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+h1::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: #3498db;
+  margin: 10px auto;
+  border-radius: 2px;
+}
+
+/* Input Styles */
+.input-group {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.input-group label {
+  flex: 1;
+  font-weight: 600;
+  margin-right: 15px;
+}
+
+.input-group input[type="number"] {
+  width: 80px;
+  padding: 8px;
+  text-align: center;
+  border: 2px solid #e7e7e7;
+  border-radius: 5px;
+  margin: 0 10px;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.btn-control {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-control:hover {
+  transform: scale(1.1);
+}
+
+/* Custom Rewards */
+.custom-rewards-section {
+  margin-top: 30px;
+}
+
+.rewards-container {
+  min-height: 100px;
+  margin: 20px 0;
+}
+
+.custom-reward {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin: 5px 0;
+  cursor: grab;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.custom-reward:hover {
+  transform: translateX(5px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.custom-reward.dragging {
+  opacity: 0.7;
+  transform: scale(0.98);
+}
+
+.custom-reward button {
+  margin-left: auto;
+  background: #e74c3c;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.custom-reward button:hover {
+  background: #c0392b;
+}
+
+.add-section {
+  display: none;
+  margin-top: 15px;
+}
+
+.add-section input {
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  flex: 1;
+}
+
+.btn-primary {
+  background: #2ecc71;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background: #27ae60;
+}
+
+/* Total Display */
+.total {
+  margin-top: 30px;
+  padding: 15px;
+  background: #3498db;
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 1.2em;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .input-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .input-group label {
+    margin-bottom: 5px;
+  }
+  
+  .btn-control {
+    margin: 5px 0;
+  }
+}
