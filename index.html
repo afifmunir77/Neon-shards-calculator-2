@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code: Neon Shards Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <div class="container">
+    <h1>Code: Neon Shards Calculator</h1>
+
+    <!-- Player Input Section -->
+    <div class="player-inputs">
+      <div class="input-group">
+        <label>98-99 OVR:</label>
+        <button class="btn-control" onclick="updateValue('ovr98_99', -1)">-</button>
+        <input type="number" id="ovr98_99" value="0" min="0" readonly>
+        <button class="btn-control" onclick="updateValue('ovr98_99', 1)">+</button>
+      </div>
+      <!-- ... (other OVR inputs remain the same) ... -->
+      <div class="input-group">
+        <label>Others:</label>
+        <input type="number" id="others" value="0" min="0" oninput="saveData()">
+      </div>
+    </div>
+
+    <!-- Daily Pack Section -->
+    <div class="daily-pack-section">
+      <div class="input-group">
+        <label>Daily Pack:</label>
+        <button class="btn-control" onclick="updateValue('dailyPack', -1)">-</button>
+        <input type="number" id="dailyPack" value="0" min="0" readonly>
+        <button class="btn-control" onclick="updateValue('dailyPack', 1)">+</button>
+      </div>
+    </div>
+
+    <!-- Custom Rewards Section -->
+    <div class="custom-rewards-section">
+      <div id="customRewardsContainer" class="rewards-container"></div>
+      <div class="add-more-container">
+        <label><input type="checkbox" id="addMoreToggle"> Add More Rewards</label>
+        <div id="addMoreSection" class="add-section">
+          <input type="text" id="rewardName" placeholder="Reward Name">
+          <input type="number" id="rewardShards" placeholder="Shards" min="0">
+          <button class="btn-primary" onclick="addCustomReward()">Add Reward</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Display -->
+    <div class="total" id="totalShards">Total Shards: 0</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
